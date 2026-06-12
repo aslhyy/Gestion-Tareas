@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Gestion colaborativa de proyectos y tareas">
+  <title>TaskFlow | Gestion de tareas</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div id="toast" class="toast" role="status"></div>
+
+  <main id="auth-view" class="auth-layout">
+    <section class="hero">
+      <span class="eyebrow">ORGANIZA · COLABORA · AVANZA</span>
+      <h1>Convierte planes en <em>progreso.</em></h1>
+      <p>Gestiona proyectos, asigna responsables y sigue cada tarea desde un solo lugar.</p>
+      <div class="hero-stats"><strong>3</strong><span>niveles de prioridad</span><strong>100%</strong><span>en la nube</span></div>
+    </section>
+    <section class="auth-card">
+      <div class="brand">Task<span>Flow</span></div>
+      <div class="tabs">
+        <button class="tab active" data-auth-tab="login">Ingresar</button>
+        <button class="tab" data-auth-tab="register">Registrarse</button>
+      </div>
+      <form id="auth-form">
+        <label id="name-field" class="hidden">Nombre<input id="auth-name" minlength="2" autocomplete="name"></label>
+        <label>Correo<input id="auth-email" type="email" required autocomplete="email" placeholder="nombre@correo.com"></label>
+        <label>Contrasena<input id="auth-password" type="password" required minlength="6" autocomplete="current-password" placeholder="Minimo 6 caracteres"></label>
+        <button class="button primary" type="submit">Ingresar</button>
+      </form>
+    </section>
+  </main>
+
+  <div id="app-view" class="app hidden">
+    <aside class="sidebar">
+      <div class="brand light">Task<span>Flow</span></div>
+      <nav>
+        <button class="nav active" data-section="dashboard">Resumen</button>
+        <button class="nav" data-section="projects">Proyectos</button>
+        <button class="nav" data-section="tasks">Tareas</button>
+      </nav>
+      <div class="profile"><div id="avatar">U</div><span><strong id="user-name">Usuario</strong><small id="user-email"></small></span></div>
+      <button id="logout" class="nav">Cerrar sesion</button>
+    </aside>
+
+    <main class="content">
+      <header><div><span class="eyebrow">ESPACIO DE TRABAJO</span><h1 id="page-title">Resumen</h1></div><button id="primary-action" class="button primary">+ Nueva tarea</button></header>
+
+      <section id="dashboard-section" class="section">
+        <div id="stats" class="stats"></div>
+        <div class="panel">
+          <div class="panel-title"><h2>Tareas recientes</h2><button class="link" data-go="tasks">Ver todas</button></div>
+          <div id="recent-tasks" class="task-list"></div>
+        </div>
+      </section>
+
+      <section id="projects-section" class="section hidden">
+        <div class="panel-title"><p>Crea espacios para organizar el trabajo de tu equipo.</p><button class="button primary" data-open="project">+ Nuevo proyecto</button></div>
+        <div id="project-grid" class="project-grid"></div>
+      </section>
+
+      <section id="tasks-section" class="section hidden">
+        <div class="filters">
+          <input id="search-filter" type="search" placeholder="Buscar tarea...">
+          <select id="status-filter"><option value="">Todos los estados</option><option value="pendiente">Pendiente</option><option value="en_progreso">En progreso</option><option value="completada">Completada</option></select>
+          <select id="priority-filter"><option value="">Todas las prioridades</option><option value="alta">Alta</option><option value="media">Media</option><option value="baja">Baja</option></select>
+          <select id="project-filter"><option value="">Todos los proyectos</option></select>
+          <button class="button primary" data-open="task">+ Nueva tarea</button>
+        </div>
+        <div class="panel"><div id="all-tasks" class="task-list"></div></div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="project-dialog">
+    <form id="project-form" class="modal">
+      <div class="panel-title"><h2 id="project-modal-title">Nuevo proyecto</h2><button type="button" class="icon close">×</button></div>
+      <input id="project-id" type="hidden">
+      <label>Nombre<input id="project-name" required minlength="3" maxlength="100"></label>
+      <label>Descripcion<textarea id="project-description" rows="4" maxlength="500"></textarea></label>
+      <button class="button primary" type="submit">Guardar proyecto</button>
+    </form>
+  </dialog>
+
+  <dialog id="task-dialog">
+    <form id="task-form" class="modal">
+      <div class="panel-title"><h2 id="task-modal-title">Nueva tarea</h2><button type="button" class="icon close">×</button></div>
+      <input id="task-id" type="hidden">
+      <label>Titulo<input id="task-title" required minlength="3" maxlength="120"></label>
+      <label>Descripcion<textarea id="task-description" rows="3" maxlength="800"></textarea></label>
+      <div class="form-grid">
+        <label>Proyecto<select id="task-project" required></select></label>
+        <label>Responsable<select id="task-assignee"><option value="">Sin asignar</option></select></label>
+        <label>Estado<select id="task-status"><option value="pendiente">Pendiente</option><option value="en_progreso">En progreso</option><option value="completada">Completada</option></select></label>
+        <label>Prioridad<select id="task-priority"><option value="media">Media</option><option value="alta">Alta</option><option value="baja">Baja</option></select></label>
+      </div>
+      <label>Fecha limite<input id="task-due-date" type="date"></label>
+      <button class="button primary" type="submit">Guardar tarea</button>
+    </form>
+  </dialog>
+  <script src="/app.js" type="module"></script>
+</body>
+</html>

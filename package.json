@@ -1,0 +1,14 @@
+{
+  "name": "gestion-tareas-colaborativas",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Aplicacion web CRUD para gestionar proyectos y tareas colaborativas.",
+  "type": "module",
+  "scripts": {
+    "dev": "node --env-file=.env scripts/local-server.js",
+    "check": "node --check api/index.js && node --check public/app.js && node --check scripts/local-server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
