@@ -1,3 +1,5 @@
+//app.js
+
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => [...document.querySelectorAll(selector)];
 const state = { token: localStorage.getItem("token"), user: null, projects: [], tasks: [], profiles: [], authMode: "login" };
@@ -51,7 +53,20 @@ function showApp() {
 }
 async function init() {
   if (!state.token) return;
-  try { state.user = await api("/me"); showApp(); await loadData(); } catch { logout(false); }
+
+  try {
+    state.user = await api("/me");
+    showApp();
+  } catch {
+    logout(false);
+    return;
+  }
+
+  try {
+    await loadData();
+  } catch (error) {
+    toast(error.message || "No se pudieron cargar los datos", true);
+  }
 }
 function logout(showMessage = true) { state.token = null; localStorage.removeItem("token"); $("#app-view").classList.add("hidden"); $("#auth-view").classList.remove("hidden"); if (showMessage) toast("Sesion cerrada"); }
 function openProject(project = {}) {
