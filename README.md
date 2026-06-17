@@ -59,9 +59,7 @@ erDiagram
 
 1. Crea un proyecto gratuito en [Supabase](https://supabase.com/).
 2. Abre **SQL Editor**, copia el contenido de `supabase/schema.sql` y ejecutalo.
-3. En **Authentication > Providers > Email**, desactiva temporalmente la confirmacion de
-   correo si deseas probar registros sin configurar un servidor de correo.
-4. Copia `.env.example` como `.env` y completa:
+3. Copia `.env.example` como `.env` y completa:
 
 ```env
 SUPABASE_URL=https://TU-PROYECTO.supabase.co
@@ -70,7 +68,8 @@ SUPABASE_SERVICE_ROLE_KEY=tu_clave_service_role
 ```
 
 La clave `SUPABASE_SERVICE_ROLE_KEY` solo debe configurarse en el servidor. Nunca debe
-publicarse ni utilizarse directamente desde el navegador.
+publicarse ni utilizarse directamente desde el navegador. El backend la usa para crear
+usuarios ya confirmados, asi que la aplicacion no depende de correos de verificacion.
 
 ## Ejecucion local
 

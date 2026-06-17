@@ -62,11 +62,21 @@ async function projectIdForTask(taskId) {
 async function handleAuth(req, res, action) {
   const body = await readBody(req);
   if (!body.email || !body.password) return send(res, 400, { error: "Correo y contrasena son obligatorios" });
-  const path = action === "register" ? "/auth/v1/signup" : "/auth/v1/token?grant_type=password";
-  const payload = action === "register"
-    ? { email: body.email, password: body.password, data: { name: body.name?.trim() || body.email.split("@")[0] } }
-    : { email: body.email, password: body.password };
-  const data = await supabase(path, { method: "POST", body: JSON.stringify(payload) }, true);
+  if (action === "register") {
+    await supabase("/auth/v1/admin/users", {
+      method: "POST",
+      body: JSON.stringify({
+        email: body.email,
+        password: body.password,
+        email_confirm: true,
+        user_metadata: { name: body.name?.trim() || body.email.split("@")[0] }
+      })
+    });
+  }
+  const data = await supabase("/auth/v1/token?grant_type=password", {
+    method: "POST",
+    body: JSON.stringify({ email: body.email, password: body.password })
+  }, true);
   send(res, action === "register" ? 201 : 200, data);
 }
 

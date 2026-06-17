@@ -77,7 +77,7 @@ $("#auth-form").addEventListener("submit", async (event) => {
   try {
     const data = await api(`/auth/${state.authMode}`, { method: "POST", body: JSON.stringify({ name: $("#auth-name").value, email: $("#auth-email").value, password: $("#auth-password").value }) });
     const token = data.access_token || data.session?.access_token;
-    if (!token) return toast("Cuenta creada. Revisa tu correo para confirmar el registro.", false);
+    if (!token) return toast("No fue posible iniciar sesion automaticamente", true);
     state.token = token; localStorage.setItem("token", token); await init(); toast("Bienvenido a TaskFlow");
   } catch (error) { toast(error.message, true); }
 });
