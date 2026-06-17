@@ -1,117 +1,203 @@
-# TaskFlow - Gestion de Tareas Colaborativas
+# TaskFlow - Sistema de Gestión de Tareas Colaborativas
 
-Aplicacion web CRUD para crear proyectos, organizar tareas, asignar responsables y dar
-seguimiento al progreso. Fue construida como proyecto full-stack para desplegar en Vercel
-y usar Supabase como base de datos online y proveedor de autenticacion.
+## Descripción del proyecto
 
-## Funcionalidades
+TaskFlow es una aplicación web desarrollada para la gestión de proyectos y tareas colaborativas. Permite a los usuarios registrarse, iniciar sesión, crear proyectos, administrar tareas y realizar seguimiento del estado de cada actividad mediante una interfaz moderna y fácil de usar.
 
-- Registro e inicio de sesion de usuarios.
-- CRUD completo de proyectos.
-- CRUD completo de tareas relacionadas con proyectos.
-- Asignacion de tareas a usuarios registrados.
-- Estado, prioridad y fecha limite por tarea.
-- Busqueda y filtros por proyecto, estado y prioridad.
-- Dashboard con estadisticas y tareas recientes.
-- Interfaz responsive con mensajes de exito y error.
+El sistema implementa operaciones CRUD completas sobre una base de datos en la nube utilizando Supabase y se encuentra desplegado en Vercel.
 
-Con esto se cumplen cuatro requisitos de complejidad media-alta: autenticacion, relaciones
-entre entidades, filtros avanzados y dashboard.
+---
 
-## Tecnologias
+# Tecnologías utilizadas
 
-- Frontend: HTML5, CSS3 y JavaScript.
-- Backend: Node.js como funcion serverless.
-- Base de datos y autenticacion: Supabase (PostgreSQL + Supabase Auth).
-- Despliegue: Vercel.
-- Control de versiones: Git y GitHub.
+## Frontend
+- HTML5
+- CSS3
+- JavaScript (Vanilla JS)
 
-## Modelo de datos
+## Backend
+- Node.js
+- API Serverless (Vercel Functions)
 
-```mermaid
-erDiagram
-  PROFILES ||--o{ PROJECTS : crea
-  PROFILES ||--o{ TASKS : recibe
-  PROJECTS ||--o{ TASKS : contiene
-  PROFILES {
-    uuid id PK
-    text name
-    text email
-  }
-  PROJECTS {
-    uuid id PK
-    text name
-    text description
-    uuid owner_id FK
-  }
-  TASKS {
-    uuid id PK
-    text title
-    text status
-    text priority
-    date due_date
-    uuid project_id FK
-    uuid assignee_id FK
-  }
-```
+## Base de datos
+- Supabase (PostgreSQL)
 
-## Configuracion de Supabase
+## Autenticación
+- Supabase Authentication
 
-1. Crea un proyecto gratuito en [Supabase](https://supabase.com/).
-2. Abre **SQL Editor**, copia el contenido de `supabase/schema.sql` y ejecutalo.
-3. Copia `.env.example` como `.env` y completa:
+## Despliegue
+- Vercel
 
-```env
-SUPABASE_URL=https://TU-PROYECTO.supabase.co
-SUPABASE_ANON_KEY=tu_clave_anon
-SUPABASE_SERVICE_ROLE_KEY=tu_clave_service_role
-```
+## Control de versiones
+- Git
+- GitHub
 
-La clave `SUPABASE_SERVICE_ROLE_KEY` solo debe configurarse en el servidor. Nunca debe
-publicarse ni utilizarse directamente desde el navegador. El backend la usa para crear
-usuarios ya confirmados, asi que la aplicacion no depende de correos de verificacion.
+---
 
-## Ejecucion local
+# Funcionalidades
 
-Requiere Node.js 20 o superior. No necesita instalar dependencias.
+## Gestión de usuarios
+- Registro de usuarios
+- Inicio de sesión
+- Autenticación mediante Supabase
+
+## Gestión de proyectos (CRUD)
+- Crear proyectos
+- Consultar proyectos
+- Editar proyectos
+- Eliminar proyectos
+
+## Gestión de tareas (CRUD)
+- Crear tareas
+- Consultar tareas
+- Editar tareas
+- Eliminar tareas
+- Asignar tareas a usuarios
+- Definir prioridad
+- Definir estado
+- Definir fecha límite
+
+## Dashboard
+- Conteo de proyectos
+- Conteo de tareas
+- Conteo de tareas completadas
+- Conteo de tareas en progreso
+
+## Búsqueda y filtros
+- Buscar tareas por nombre
+- Filtrar por estado
+- Filtrar por prioridad
+- Filtrar por proyecto
+
+---
+
+# Modelo de base de datos
+
+El sistema está compuesto por las siguientes entidades:
+
+## Profiles
+- id
+- name
+- email
+- created_at
+
+## Projects
+- id
+- name
+- description
+- owner_id
+- created_at
+- updated_at
+
+## Tasks
+- id
+- title
+- description
+- status
+- priority
+- due_date
+- project_id
+- assignee_id
+- created_at
+- updated_at
+
+Relaciones:
+
+- Un usuario puede tener muchos proyectos.
+- Un proyecto puede contener muchas tareas.
+- Una tarea puede estar asignada a un usuario.
+
+---
+
+# Instalación
+
+1. Clonar el repositorio
 
 ```bash
+git clone https://github.com/TU-USUARIO/TU-REPOSITORIO.git
+```
+
+2. Entrar al proyecto
+
+```bash
+cd TU-REPOSITORIO
+```
+
+3. Configurar las variables de entorno
+
+```env
+SUPABASE_URL=TU_SUPABASE_URL
+SUPABASE_ANON_KEY=TU_SUPABASE_ANON_KEY
+SUPABASE_SERVICE_ROLE_KEY=TU_SUPABASE_SERVICE_ROLE_KEY
+```
+
+4. Ejecutar el proyecto
+
+```bash
+npm install
 npm run dev
 ```
 
-Abre `http://localhost:3000`.
+---
 
-Para validar la sintaxis:
+# URL del sistema desplegado
 
-```bash
-npm run check
+```
+https://gestion-tareas-mocha.vercel.app
 ```
 
-## Despliegue en Vercel
+---
 
-2. En Vercel, selecciona **Add New > Project** e importa el repositorio.
-3. Agrega `SUPABASE_URL`, `SUPABASE_ANON_KEY` y `SUPABASE_SERVICE_ROLE_KEY` en
-   **Settings > Environment Variables**.
-4. Despliega el proyecto.
+# Capturas de pantalla
 
-URL del sistema desplegado: `PENDIENTE_AGREGAR_URL_DE_VERCEL`
+- Pantalla de inicio de sesión
+  <br><br>
+  <img width="500" height="300" alt="image" src="https://github.com/user-attachments/assets/401f1d35-f2f0-4bc5-8d34-c514a552d247" />
+<br><br>
+- Registro de usuarios
+  <br><br>
+  <img width="500" height="300" alt="image" src="https://github.com/user-attachments/assets/8a74fda3-d681-40c8-896c-1bdc69e9f4fd" />
+<br><br>
+- Dashboard principal
+  <br><br>
+  <img width="500" height="300" alt="image" src="https://github.com/user-attachments/assets/d7bc2027-e117-4fc2-8ccb-917d66113c51" />
+<br><br>
+- Gestión de proyectos
+  <br><br>
+  <img width="500" height="300" alt="image" src="https://github.com/user-attachments/assets/39ba08b3-1c42-4511-b020-91416e1c29e3" />
+  <br><br>
+- Gestión de tareas
+  <br><br>
+  <img width="500" height="300" alt="image" src="https://github.com/user-attachments/assets/3fb9b543-03fe-4ed3-8d71-d30652d5c1af" />
+<br><br>
+- Creación de proyectos
+  <br><br>
+  <img width="500" height="300" alt="image" src="https://github.com/user-attachments/assets/5e108a7a-0be9-4d68-8583-233627e8d822" />
+<br><br>
+- Creación de tareas
+  <br><br>
+  <img width="500" height="300" alt="image" src="https://github.com/user-attachments/assets/0d9c00f6-081d-444e-bf15-0fa504cc3ba2" />
+  <br><br>
+- Filtros de búsqueda
+  <br><br>
+  <img width="500" height="300" alt="image" src="https://github.com/user-attachments/assets/a7397cdd-b752-4324-b519-3b0c0d05bca2" />
 
-## Endpoints principales
+# Requisitos implementados
 
-| Metodo | Ruta | Descripcion |
-|---|---|---|
-| POST | `/api/auth/register` | Registrar usuario |
-| POST | `/api/auth/login` | Iniciar sesion |
-| GET/POST | `/api/projects` | Listar o crear proyectos |
-| PUT/DELETE | `/api/projects/:id` | Editar o eliminar proyecto |
-| GET/POST | `/api/tasks` | Listar, filtrar o crear tareas |
-| PUT/DELETE | `/api/tasks/:id` | Editar o eliminar tarea |
+- CRUD completo de proyectos
+- CRUD completo de tareas
+- Base de datos en la nube (Supabase)
+- Autenticación de usuarios
+- Relaciones entre entidades
+- Dashboard con estadísticas
+- Búsqueda de tareas
+- Filtros por estado, prioridad y proyecto
+- Validaciones en formularios
+- Despliegue en Vercel
 
-## Capturas de pantalla
+---
 
-Agrega aqui capturas del sistema desplegado antes de entregar:
+# Autor
 
-- Pantalla de autenticacion.
-- Dashboard.
-- Listado de proyectos.
-- CRUD y filtros de tareas.
+**Aslhy Nicol Casteblanco Jiménez**  
+Aprendiz ADSO - SENA
