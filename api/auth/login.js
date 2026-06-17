@@ -1,1 +1,1 @@
-export { default } from "../_handler.js";
+module.exports = require("../../lib/api-handler.js");

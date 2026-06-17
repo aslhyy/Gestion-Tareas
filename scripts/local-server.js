@@ -1,7 +1,7 @@
-import { createServer } from "node:http";
-import { readFile } from "node:fs/promises";
-import { extname, join, normalize } from "node:path";
-import handler from "../api/index.js";
+const { createServer } = require("node:http");
+const { readFile } = require("node:fs/promises");
+const { extname, join, normalize } = require("node:path");
+const handler = require("../api/index.js");
 
 const publicDir = join(process.cwd(), "public");
 const types = { ".html": "text/html", ".css": "text/css", ".js": "text/javascript", ".svg": "image/svg+xml" };
