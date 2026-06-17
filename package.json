@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "node --env-file=.env scripts/local-server.js",
-    "check": "node --check api/index.js && node --check public/app.js && node --check scripts/local-server.js"
+    "check": "node --check api/index.js && node --check \"api/[...path].js\" && node --check public/app.js && node --check scripts/local-server.js"
   },
   "engines": {
     "node": ">=20"

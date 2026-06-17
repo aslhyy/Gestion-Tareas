@@ -10,9 +10,18 @@ function send(res, status, data) {
 
 async function readBody(req) {
   if (req.body && typeof req.body === "object") return req.body;
+  if (typeof req.body === "string") return JSON.parse(req.body || "{}");
   let body = "";
   for await (const chunk of req) body += chunk;
   return body ? JSON.parse(body) : {};
+}
+
+function parseJson(text) {
+  try {
+    return text ? JSON.parse(text) : null;
+  } catch {
+    return { message: text || "Respuesta no valida del servidor" };
+  }
 }
 
 async function supabase(path, options = {}, useAnon = false) {
@@ -28,7 +37,7 @@ async function supabase(path, options = {}, useAnon = false) {
     }
   });
   const text = await response.text();
-  const data = text ? JSON.parse(text) : null;
+  const data = parseJson(text);
   if (!response.ok) {
     const error = new Error(data?.message || data?.msg || data?.error_description || "Error de base de datos");
     error.status = response.status;
@@ -61,6 +70,7 @@ async function projectIdForTask(taskId) {
 
 async function handleAuth(req, res, action) {
   const body = await readBody(req);
+  if (!["login", "register"].includes(action)) return send(res, 404, { error: "Ruta de autenticacion no encontrada" });
   if (!body.email || !body.password) return send(res, 400, { error: "Correo y contrasena son obligatorios" });
   if (action === "register") {
     await supabase("/auth/v1/admin/users", {
