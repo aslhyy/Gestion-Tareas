@@ -2,10 +2,10 @@
   "name": "gestion-tareas-colaborativas",
   "version": "1.0.0",
   "private": true,
-  "description": "Aplicacion web CRUD para gestionar proyectos y tareas colaborativas.",
+  "description": "Aplicación web CRUD para gestionar proyectos y tareas colaborativas.",
   "scripts": {
     "dev": "node --env-file=.env scripts/local-server.js",
-    "check": "node --check lib/api-handler.js && node --check api/index.js && node --check api/debug.js && node --check api/auth/register.js && node --check api/auth/login.js && node --check api/me.js && node --check api/profiles.js && node --check api/projects.js && node --check \"api/projects/[id].js\" && node --check api/tasks.js && node --check \"api/tasks/[id].js\" && node --check public/app.js && node --check scripts/local-server.js"
+    "check": "node --check lib/api-handler.js && node --check api/index.js && node --check api/debug.js && node --check api/auth/register.js && node --check api/auth/login.js && node --check api/me.js && node --check api/profiles.js && node --check \"api/profiles/[id].js\" && node --check api/projects.js && node --check \"api/projects/[id].js\" && node --check api/tasks.js && node --check \"api/tasks/[id].js\" && node --check public/app.js && node --check scripts/local-server.js"
   },
   "engines": {
     "node": ">=20"

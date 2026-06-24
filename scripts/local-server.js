@@ -25,4 +25,4 @@ createServer(async (req, res) => {
     res.statusCode = 404;
     res.end("Not found");
   }
-}).listen(3000, () => console.log("Aplicacion disponible en http://localhost:3000"));
+}).listen(3000, () => console.log("Aplicación disponible en http://localhost:3000"));

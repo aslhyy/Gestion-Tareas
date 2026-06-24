@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Gestion colaborativa de proyectos y tareas">
-  <title>TaskFlow | Gestion de tareas</title>
+  <meta name="description" content="Gestión colaborativa de proyectos y tareas">
+  <title>TaskFlow | Gestión de tareas</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
@@ -26,7 +26,7 @@
       <form id="auth-form">
         <label id="name-field" class="hidden">Nombre<input id="auth-name" minlength="2" autocomplete="name"></label>
         <label>Correo<input id="auth-email" type="email" required autocomplete="email" placeholder="nombre@correo.com"></label>
-        <label>Contrasena<input id="auth-password" type="password" required minlength="6" autocomplete="current-password" placeholder="Minimo 6 caracteres"></label>
+        <label>Contraseña<input id="auth-password" type="password" required minlength="6" autocomplete="current-password" placeholder="Mínimo 6 caracteres"></label>
         <button class="button primary" type="submit">Ingresar</button>
       </form>
     </section>
@@ -39,13 +39,20 @@
         <button class="nav active" data-section="dashboard">Resumen</button>
         <button class="nav" data-section="projects">Proyectos</button>
         <button class="nav" data-section="tasks">Tareas</button>
+        <button id="users-nav" class="nav hidden" data-section="users">Usuarios</button>
       </nav>
-      <div class="profile"><div id="avatar">U</div><span><strong id="user-name">Usuario</strong><small id="user-email"></small></span></div>
-      <button id="logout" class="nav">Cerrar sesion</button>
+      <div class="profile">
+        <div id="avatar">U</div>
+        <span><strong id="user-name">Usuario</strong><small id="user-role"></small><small id="user-email"></small></span>
+      </div>
+      <button id="logout" class="nav">Cerrar sesión</button>
     </aside>
 
     <main class="content">
-      <header><div><span class="eyebrow">ESPACIO DE TRABAJO</span><h1 id="page-title">Resumen</h1></div><button id="primary-action" class="button primary">+ Nueva tarea</button></header>
+      <header>
+        <div><span class="eyebrow">ESPACIO DE TRABAJO</span><h1 id="page-title">Resumen</h1></div>
+        <button id="primary-action" class="button primary hidden"></button>
+      </header>
 
       <section id="dashboard-section" class="section">
         <div id="stats" class="stats"></div>
@@ -56,7 +63,7 @@
       </section>
 
       <section id="projects-section" class="section hidden">
-        <div class="panel-title"><p>Crea espacios para organizar el trabajo de tu equipo.</p><button class="button primary" data-open="project">+ Nuevo proyecto</button></div>
+        <div class="panel-title"><p>Crea espacios para organizar el trabajo de tu equipo.</p></div>
         <div id="project-grid" class="project-grid"></div>
       </section>
 
@@ -66,39 +73,43 @@
           <select id="status-filter"><option value="">Todos los estados</option><option value="pendiente">Pendiente</option><option value="en_progreso">En progreso</option><option value="completada">Completada</option></select>
           <select id="priority-filter"><option value="">Todas las prioridades</option><option value="alta">Alta</option><option value="media">Media</option><option value="baja">Baja</option></select>
           <select id="project-filter"><option value="">Todos los proyectos</option></select>
-          <button class="button primary" data-open="task">+ Nueva tarea</button>
         </div>
         <div class="panel"><div id="all-tasks" class="task-list"></div></div>
+      </section>
+
+      <section id="users-section" class="section hidden">
+        <div class="panel-title"><p>Administra los roles y permisos de las personas registradas.</p></div>
+        <div class="panel"><div id="users-list" class="users-list"></div></div>
       </section>
     </main>
   </div>
 
   <dialog id="project-dialog">
     <form id="project-form" class="modal">
-      <div class="panel-title"><h2 id="project-modal-title">Nuevo proyecto</h2><button type="button" class="icon close">×</button></div>
+      <div class="panel-title"><h2 id="project-modal-title">Nuevo proyecto</h2><button type="button" class="icon close" aria-label="Cerrar">×</button></div>
       <input id="project-id" type="hidden">
       <label>Nombre<input id="project-name" required minlength="3" maxlength="100"></label>
-      <label>Descripcion<textarea id="project-description" rows="4" maxlength="500"></textarea></label>
+      <label>Descripción<textarea id="project-description" rows="4" maxlength="500"></textarea></label>
       <button class="button primary" type="submit">Guardar proyecto</button>
     </form>
   </dialog>
 
   <dialog id="task-dialog">
     <form id="task-form" class="modal">
-      <div class="panel-title"><h2 id="task-modal-title">Nueva tarea</h2><button type="button" class="icon close">×</button></div>
+      <div class="panel-title"><h2 id="task-modal-title">Nueva tarea</h2><button type="button" class="icon close" aria-label="Cerrar">×</button></div>
       <input id="task-id" type="hidden">
-      <label>Titulo<input id="task-title" required minlength="3" maxlength="120"></label>
-      <label>Descripcion<textarea id="task-description" rows="3" maxlength="800"></textarea></label>
+      <label>Título<input id="task-title" required minlength="3" maxlength="120"></label>
+      <label>Descripción<textarea id="task-description" rows="3" maxlength="800"></textarea></label>
       <div class="form-grid">
         <label>Proyecto<select id="task-project" required></select></label>
         <label>Responsable<select id="task-assignee"><option value="">Sin asignar</option></select></label>
         <label>Estado<select id="task-status"><option value="pendiente">Pendiente</option><option value="en_progreso">En progreso</option><option value="completada">Completada</option></select></label>
         <label>Prioridad<select id="task-priority"><option value="media">Media</option><option value="alta">Alta</option><option value="baja">Baja</option></select></label>
       </div>
-      <label>Fecha limite<input id="task-due-date" type="date"></label>
+      <label>Fecha límite<input id="task-due-date" type="date"></label>
       <button class="button primary" type="submit">Guardar tarea</button>
     </form>
   </dialog>
-  <script src="/app.js" type="module"></script>
+  <script src="/app.js"></script>
 </body>
 </html>

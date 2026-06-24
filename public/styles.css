@@ -459,7 +459,7 @@ textarea:focus {
 
 .filters {
     display: grid;
-    grid-template-columns: 1.4fr repeat(3, 1fr) auto;
+    grid-template-columns: 1.4fr repeat(3, 1fr);
     gap: 10px;
     margin-bottom: 18px
 }
@@ -516,6 +516,50 @@ dialog::backdrop {
     background: var(--danger)
 }
 
+.users-list {
+    display: grid
+}
+
+.user-row {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 18px;
+    align-items: center;
+    padding: 16px 4px;
+    border-top: 1px solid var(--line)
+}
+
+.user-row:first-child {
+    border-top: 0
+}
+
+.user-row strong,
+.user-row small {
+    display: block
+}
+
+.user-row small {
+    color: var(--muted);
+    margin-top: 4px
+}
+
+.role-select {
+    min-width: 140px;
+    margin: 0
+}
+
+.role-badge {
+    display: inline-block;
+    border-radius: 20px;
+    padding: 5px 9px;
+    background: #e4ece5;
+    color: #315e45;
+    font-size: .68rem;
+    font-weight: 850;
+    text-transform: uppercase;
+    letter-spacing: .5px
+}
+
 @media(max-width:900px) {
     .auth-layout {
         grid-template-columns: 1fr
@@ -561,7 +605,8 @@ dialog::backdrop {
         grid-template-columns: 1fr 1fr
     }
 
-    .task {
+    .task,
+    .user-row {
         grid-template-columns: 1fr
     }
 
